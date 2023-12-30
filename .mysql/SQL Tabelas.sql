@@ -4,9 +4,9 @@
 
 -- CREATE (
 
-CREATE DATABASE IF NOT EXISTS CONTROLE_COMPRA_VENDA;
+-- CREATE DATABASE IF NOT EXISTS CONTROLE_COMPRA_VENDA;
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.USUARIOS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_USUARIOS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.USUARIOS (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO CONTROLE_COMPRA_VENDA.USUARIOS (nome,email,senha,tipo) VALUES ('ADM','adm@adm','123',1);
+INSERT INTO techs832_GEN_FINANCEIRO.CCV_USUARIOS (nome,email,senha,tipo) VALUES ('ADM','adm@adm','123',1);
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.EMPRESAS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_EMPRESAS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.EMPRESAS (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.MATERIAL_TIPOS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_MATERIAL_TIPOS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL DEFAULT '',
   `ativo` tinyint(4) NOT NULL DEFAULT '1',
@@ -42,9 +42,9 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.MATERIAL_TIPOS (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO CONTROLE_COMPRA_VENDA.MATERIAL_TIPOS (nome) VALUES ('NAO DEFINIDO');
+INSERT INTO techs832_GEN_FINANCEIRO.CCV_MATERIAL_TIPOS (nome) VALUES ('NAO DEFINIDO');
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.MATERIAIS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_MATERIAIS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(60) NOT NULL DEFAULT '',
   `tipo_material_id` int(11) NOT NULL DEFAULT 1,
@@ -55,10 +55,10 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.MATERIAIS (
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_materiais_tipo_material_id` (`tipo_material_id`),
-  CONSTRAINT `fk_materiais_tipo_material_id` FOREIGN KEY (`tipo_material_id`) REFERENCES `MATERIAL_TIPOS` (`id`)
+  CONSTRAINT `fk_materiais_tipo_material_id` FOREIGN KEY (`tipo_material_id`) REFERENCES `CCV_MATERIAL_TIPOS` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.PESSOAS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_PESSOAS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL DEFAULT '',
   `cnpj_cpf` varchar(14) NOT NULL DEFAULT '',
@@ -70,9 +70,9 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.PESSOAS (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO CONTROLE_COMPRA_VENDA.PESSOAS (nome) VALUES ('CLIENTE PADRAO');
+INSERT INTO techs832_GEN_FINANCEIRO.CCV_PESSOAS (nome) VALUES ('CLIENTE PADRAO');
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.PESSOA_CONTATOS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_PESSOA_CONTATOS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` varchar(1) NOT NULL DEFAULT '',
   `contato` varchar(100) NOT NULL DEFAULT '',
@@ -83,10 +83,10 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.PESSOA_CONTATOS (
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_pessoa_contato_pessoa_id` (`pessoa_id`),
-  CONSTRAINT `fk_pessoa_contato_pessoa_id` FOREIGN KEY (`pessoa_id`) REFERENCES `PESSOAS` (`id`)
+  CONSTRAINT `fk_pessoa_contato_pessoa_id` FOREIGN KEY (`pessoa_id`) REFERENCES `CCV_PESSOAS` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.MOVIMENTOS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_MOVIMENTOS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` varchar(1) NOT NULL DEFAULT '',
   `data_mov` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -106,12 +106,12 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.MOVIMENTOS (
   KEY `fk_movimentos_pessoa_id` (`pessoa_id`),
   KEY `fk_movimentos_empresa_id` (`empresa_id`),
   KEY `fk_movimentos_usuario_id`(`usuario_id`),
-  CONSTRAINT `fk_movimentos_pessoa_id` FOREIGN KEY (`pessoa_id`) REFERENCES `PESSOAS` (`id`),
-  CONSTRAINT `fk_movimentos_empresa_id` FOREIGN KEY (`empresa_id`) REFERENCES `EMPRESAS` (`id`),
-  CONSTRAINT `fk_movimentos_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `USUARIOS` (`id`)
+  CONSTRAINT `fk_movimentos_pessoa_id` FOREIGN KEY (`pessoa_id`) REFERENCES `CCV_PESSOAS` (`id`),
+  CONSTRAINT `fk_movimentos_empresa_id` FOREIGN KEY (`empresa_id`) REFERENCES `CCV_EMPRESAS` (`id`),
+  CONSTRAINT `fk_movimentos_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `CCV_USUARIOS` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.MOVIMENTO_MATERIAIS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_MOVIMENTO_MATERIAIS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `movimento_id` int(11) NOT NULL,
   `material_id` int(11) NOT NULL,
@@ -127,12 +127,12 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.MOVIMENTO_MATERIAIS (
   KEY `fk_movimento_materiais_movimento_id`(`movimento_id`),
   KEY `fk_movimento_materiais_material_id` (`material_id`),
   KEY `fk_movimento_materiais_usuario_id`(`usuario_id`),
-  CONSTRAINT `fk_movimento_materiais_movimento_id` FOREIGN KEY (`movimento_id`) REFERENCES `MOVIMENTOS` (`id`),
-  CONSTRAINT `fk_movimento_materiais_material_id` FOREIGN KEY (`material_id`) REFERENCES `MATERIAIS` (`id`),
-  CONSTRAINT `fk_movimento_materiais_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `USUARIOS` (`id`)
+  CONSTRAINT `fk_movimento_materiais_movimento_id` FOREIGN KEY (`movimento_id`) REFERENCES `CCV_MOVIMENTOS` (`id`),
+  CONSTRAINT `fk_movimento_materiais_material_id` FOREIGN KEY (`material_id`) REFERENCES `CCV_MATERIAIS` (`id`),
+  CONSTRAINT `fk_movimento_materiais_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `CCV_USUARIOS` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.PAGAMENTO_TIPOS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_PAGAMENTO_TIPOS (
   `id` int(11) NOT NULL AUTO_INCREMENT, 
   `nome` varchar(100) NOT NULL DEFAULT '',  
   `ativo` tinyint(4) NOT NULL DEFAULT '1',
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.PAGAMENTO_TIPOS (
   PRIMARY KEY (`id`)  
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.PAGAMENTOS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_PAGAMENTOS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `movimento_id` int(11) NOT NULL DEFAULT 1,
   `pagamento_tipo_id` int(11) NOT NULL DEFAULT 1,
@@ -155,12 +155,12 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.PAGAMENTOS (
   KEY `fk_pagamentos_movimento_id`(`movimento_id`),
   KEY `fk_pagamentos_usuario_id`(`usuario_id`),
   KEY `fk_pagamentos_pagamento_tipo_id`(`pagamento_tipo_id`),
-  CONSTRAINT `fk_pagamentos_movimento_id` FOREIGN KEY (`movimento_id`) REFERENCES `MOVIMENTOS` (`id`),
-  CONSTRAINT `fk_pagamentos_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `USUARIOS` (`id`),
-  CONSTRAINT `fk_pagamentos_pagamento_tipo_id` FOREIGN KEY (`pagamento_tipo_id`) REFERENCES `PAGAMENTO_TIPOS` (`id`)
+  CONSTRAINT `fk_pagamentos_movimento_id` FOREIGN KEY (`movimento_id`) REFERENCES `CCV_MOVIMENTOS` (`id`),
+  CONSTRAINT `fk_pagamentos_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `CCV_USUARIOS` (`id`),
+  CONSTRAINT `fk_pagamentos_pagamento_tipo_id` FOREIGN KEY (`pagamento_tipo_id`) REFERENCES `CCV_PAGAMENTO_TIPOS` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.ESTOQUES (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_ESTOQUES (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `empresa_id` int(11) NOT NULL DEFAULT 1,
   `material_id` int(11) NOT NULL DEFAULT 1,
@@ -172,12 +172,12 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.ESTOQUES (
   PRIMARY KEY (`id`),
   KEY `fk_estoques_empresa_id`(`empresa_id`),
   KEY `fk_estoques_material_id`(`material_id`),
-  CONSTRAINT `fk_estoques_empresa_id` FOREIGN KEY (`empresa_id`) REFERENCES `EMPRESAS` (`id`),
-  CONSTRAINT `fk_estoques_material_id` FOREIGN KEY (`material_id`) REFERENCES `MATERIAIS`(`id`)
+  CONSTRAINT `fk_estoques_empresa_id` FOREIGN KEY (`empresa_id`) REFERENCES `CCV_EMPRESAS` (`id`),
+  CONSTRAINT `fk_estoques_material_id` FOREIGN KEY (`material_id`) REFERENCES `CCV_MATERIAIS`(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Tabela para guardar movimento de caixa.
-CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.CAIXA_MOVIMENTOS (
+CREATE TABLE IF NOT EXISTS  techs832_GEN_FINANCEIRO.CCV_CAIXA_MOVIMENTOS (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `caixa_id` int(11) NOT NULL DEFAULT 1,
   `usuario_id` int(11) NOT NULL DEFAULT 1,
@@ -190,23 +190,23 @@ CREATE TABLE IF NOT EXISTS  CONTROLE_COMPRA_VENDA.CAIXA_MOVIMENTOS (
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),  
   KEY `fk_caixa_movimentos_usuario_id`(`usuario_id`),  
-  CONSTRAINT `fk_caixa_movimentos_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `USUARIOS` (`id`)
+  CONSTRAINT `fk_caixa_movimentos_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `CCV_USUARIOS` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Insere o saldo inicial.
-INSERT INTO CONTROLE_COMPRA_VENDA.CAIXA_MOVIMENTOS (quantia,tipo,memorando,data_mov) VALUES (250,'E','ENTRADA','2021-06-01');
+INSERT INTO techs832_GEN_FINANCEIRO.CCV_CAIXA_MOVIMENTOS (quantia,tipo,memorando,data_mov) VALUES (250,'E','ENTRADA','2021-06-01');
 
 --)
 
 -- OPERAÇOES (
-SELECT * FROM CONTROLE_COMPRA_VENDA.USUARIOS;
-SELECT * FROM CONTROLE_COMPRA_VENDA.Pessoas;
-SELECT * FROM CONTROLE_COMPRA_VENDA.Pessoa_Contatos;
-SELECT * FROM controle_compra_venda.movimentos;
-SELECT * FROM controle_compra_venda.movimento_materiais;
-SELECT * FROM controle_compra_venda.pagamentos;
-SELECT * FROM controle_compra_venda.estoques;
-DELETE FROM controle_compra_venda.movimentos WHERE id > 0;
+SELECT * FROM techs832_GEN_FINANCEIRO.CCV_USUARIOS;
+SELECT * FROM techs832_GEN_FINANCEIRO.CCV_Pessoas;
+SELECT * FROM techs832_GEN_FINANCEIRO.CCV_Pessoa_Contatos;
+SELECT * FROM techs832_GEN_FINANCEIRO.CCV_movimentos;
+SELECT * FROM techs832_GEN_FINANCEIRO.CCV_movimento_materiais;
+SELECT * FROM techs832_GEN_FINANCEIRO.CCV_pagamentos;
+SELECT * FROM techs832_GEN_FINANCEIRO.CCV_estoques;
+DELETE FROM techs832_GEN_FINANCEIRO.CCV_movimentos WHERE id > 0;
 
 --)
 

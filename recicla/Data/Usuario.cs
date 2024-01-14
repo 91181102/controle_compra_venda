@@ -28,5 +28,28 @@ namespace Recicla.Data
         /// </summary>
         public bool ativo { get; set; }
         #endregion
+    
+        #region: Construtor
+        /// <summary>
+        /// Cria uma nova instância da classe Usuario.
+        /// </summary>
+        /// <![CDATA[14/01/2024]]>
+        public Usuario(){
+            this.SetDefaultValues();
+        }
+
+        /// <summary>                
+        /// Retorna o objeto para valor padrão.
+        /// </summary>
+        /// <![CDATA[14/01/2024]]>
+        public void SetDefaultValues(){
+            this.id = -1;
+            this.nome = string.Empty;
+            this.email = string.Empty;
+            this.senha = string.Empty;
+            this.tipo = 1;
+            this.ativo = true;
+        }
+        #endregion
     }
 }
